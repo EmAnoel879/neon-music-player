@@ -1,0 +1,273 @@
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🎮 Neon Music Player</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Orbitron', sans-serif;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      text-align: center;
+      overflow-x: hidden;
+      background: linear-gradient(45deg,
+        #ff0000, #ff7f00, #ffff00,
+        #00ff00, #0000ff, #4b0082, #8f00ff
+      );
+      background-size: 600% 600%;
+      animation: rainbowFlow 6s linear infinite;
+    }
+
+    @keyframes rainbowFlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      color: #00f0ff;
+      text-shadow: 0 0 10px #00f0ff, 0 0 20px #6600ff;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      color: #ffffffcc;
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+    }
+
+    input[type="text"] {
+      width: 80%;
+      max-width: 600px;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      background: #0d0d2a;
+      color: #fff;
+      font-size: 1rem;
+      outline: none;
+      box-shadow: 0 0 10px #9900ff;
+      transition: box-shadow 0.3s;
+    }
+
+    input[type="text"]:focus {
+      box-shadow: 0 0 20px #00ccff;
+    }
+
+    button {
+      margin-top: 1rem;
+      padding: 12px 30px;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(45deg, #6600ff, #00f0ff);
+      color: white;
+      font-weight: bold;
+      font-size: 1rem;
+      cursor: pointer;
+      text-transform: uppercase;
+      box-shadow: 0 0 15px #00f0ff;
+      transition: transform 0.2s, box-shadow 0.3s;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 25px #00f0ff, 0 0 50px #9900ff;
+    }
+
+    #player-container {
+      margin-top: 2rem;
+      position: relative;
+      padding: 10px;
+      border-radius: 20px;
+      animation: rgbPulse 2s infinite;
+    }
+
+    iframe {
+      border-radius: 15px;
+      border: none;
+    }
+
+    @keyframes rgbPulse {
+      0%   { box-shadow: 0 0 20px #ff0040; }
+      25%  { box-shadow: 0 0 25px #00f0ff; }
+      50%  { box-shadow: 0 0 20px #ff00ff; }
+      75%  { box-shadow: 0 0 25px #00ffcc; }
+      100% { box-shadow: 0 0 20px #6600ff; }
+    }
+
+    .equalizer {
+      display: flex;
+      gap: 5px;
+      justify-content: center;
+      margin-top: 30px;
+      height: 60px;
+    }
+
+    .bar {
+      width: 10px;
+      background: linear-gradient(to top, #00f0ff, #ff00ff);
+      animation: bounce 1s infinite ease-in-out;
+      border-radius: 5px;
+      box-shadow: 0 0 10px #00f0ff;
+    }
+
+    .bar:nth-child(1) { animation-delay: 0s; }
+    .bar:nth-child(2) { animation-delay: 0.1s; }
+    .bar:nth-child(3) { animation-delay: 0.2s; }
+    .bar:nth-child(4) { animation-delay: 0.3s; }
+    .bar:nth-child(5) { animation-delay: 0.4s; }
+    .bar:nth-child(6) { animation-delay: 0.5s; }
+    .bar:nth-child(7) { animation-delay: 0.6s; }
+
+    @keyframes bounce {
+      0%, 100% { height: 20px; }
+      50% { height: 60px; }
+    }
+
+    /* CHAT AO VIVO */
+    #chat-container {
+      width: 90%;
+      max-width: 600px;
+      margin-top: 40px;
+      background: rgba(0,0,0,0.5);
+      border: 2px solid #00f0ff;
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 0 15px #00f0ff;
+      color: white;
+    }
+
+    #chat-container h2 {
+      margin-top: 0;
+      font-size: 1.4rem;
+      color: #00f0ff;
+      text-shadow: 0 0 5px #00f0ff;
+    }
+
+    #chat-box {
+      height: 200px;
+      overflow-y: auto;
+      background: #0d0d2a;
+      padding: 10px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      font-size: 0.95rem;
+      box-shadow: inset 0 0 10px #00f0ff55;
+    }
+
+    #chat-input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+      background: #111133;
+      color: #fff;
+      box-shadow: 0 0 10px #9900ff;
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    #chat-input:focus {
+      outline: none;
+      box-shadow: 0 0 15px #00ccff;
+    }
+
+    @media (max-width: 768px) {
+      input[type="text"] {
+        width: 90%;
+      }
+
+      iframe {
+        width: 100%;
+        height: 250px;
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Som de clique -->
+  <audio id="click-sound" src="https://www.soundjay.com/buttons/sounds/button-29.mp3" preload="auto"></audio>
+
+  <h1>🎵 Neon YouTube Player 🎮</h1>
+  <p>Cole o link de uma música do YouTube e entre no clima gamer!</p>
+
+  <input type="text" id="youtube-url" placeholder="https://www.youtube.com/watch?v=...">
+  <br>
+  <button onclick="handleClick()">Tocar Música</button>
+
+  <div id="player-container" style="display:none;">
+    <iframe id="yt-player" width="560" height="315" allow="autoplay" allowfullscreen></iframe>
+  </div>
+
+  <!-- Equalizador visual -->
+  <div class="equalizer">
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+  </div>
+
+  <!-- CHAT AO VIVO -->
+  <div id="chat-container">
+    <h2>💬 Chat ao Vivo</h2>
+    <div id="chat-box"></div>
+    <input type="text" id="chat-input" placeholder="Digite sua mensagem e aperte Enter...">
+  </div>
+
+  <script>
+    // Função para pegar ID do vídeo do YouTube
+    function getYouTubeID(url) {
+      const regExp = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/;
+      const match = url.match(regExp);
+      return match ? match[1] : null;
+    }
+
+    // Função para tocar o vídeo
+    function handleClick() {
+      document.getElementById("click-sound").play();
+      loadVideo();
+    }
+
+    // Carregar vídeo no player
+    function loadVideo() {
+      const url = document.getElementById("youtube-url").value;
+      const videoId = getYouTubeID(url);
+      if (videoId) {
+        const iframe = document.getElementById("yt-player");
+        iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+        document.getElementById("player-container").style.display = "block";
+      } else {
+        alert("Link inválido! Tente novamente com um link do YouTube.");
+      }
+    }
+
+    // Função de chat ao vivo
+    const chatInput = document.getElementById('chat-input');
+    const chatBox = document.getElementById('chat-box');
+
+    chatInput.addEventListener('keypress', function (e) {
+      if (e.key === 'Enter' && chatInput.value.trim() !== '') {
+        const message = chatInput.value.trim();
+        const msgElement = document.createElement('div');
+        msgElement.textContent = '👤 ' + message;
+        chatBox.appendChild(msgElement);
+        chatBox.scrollTop = chatBox.scrollHeight;
+        chatInput.value = '';
+      }
+    });
+  </script>
+
+</body>
+</html>
